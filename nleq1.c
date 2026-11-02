@@ -23,7 +23,7 @@ static integer c__9 = 9;
 
 //#pragma comment(linker, "/EXPORT:NLEQ1=_NLEQ1@48")
 /* Subroutine */
-DLLEXPORT int STDCALL NLEQ1(integer *n, c_NLMFCN fcn, U_fp jac, doublereal *x,
+DLLEXPORT int STDCALL NLEQ1(integer *n, c_NLMFCN fcn, c_NLMJAC jac, doublereal *x,
 	doublereal *xscal, doublereal *rtol, integer *iopt, integer *ierr,
 	integer *liwk, integer *iwk, integer *lrwk, doublereal *rwk)
 {
@@ -1211,7 +1211,7 @@ DLLEXPORT int STDCALL NLEQ1(integer *n, c_NLMFCN fcn, U_fp jac, doublereal *x,
 		if (nbroy == 0) {
 			nbroy = 1;
 		}
-		n1int_(n, fcn, (c_NLMJAC)jac, &x[1], &xscal[1], rtol, &nitmax, &
+		n1int_(n, fcn, jac, &x[1], &xscal[1], rtol, &nitmax, &
 			nonlin, &iopt[1], ierr, lrwk, &rwk[1], &nrfrin, liwk, &iwk[1],
 			&nifrin, &m1, &m2, &nbroy, &rwk[l4], &rwk[l41], &rwk[l5], &
 			rwk[l51], &rwk[l6], &rwk[l63], &rwk[l61], &rwk[l7], &rwk[l71],

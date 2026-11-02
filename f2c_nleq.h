@@ -5,7 +5,7 @@ The following notable changes were made:
 real -> f2c_real
 //complex -> f2c_complex
 
-typedef void (*c_NLMFCN)(int*, double*, double*, int*); 
+typedef void (*c_NLMFCN)(integer*, double*, double*, integer*); 
 was added to ease NLEQ integration
 */
 #ifndef F2CNLEQ_INCLUDE
@@ -181,7 +181,7 @@ typedef struct Namelist Namelist;
 #define F2C_proc_par_types 1
 #ifdef __cplusplus
 typedef int /* Unknown procedure type */ (*U_fp)(...);
-typedef void (*c_NLMFCN)(int*, double*, double*, int*);
+typedef void (*c_NLMFCN)(integer*, double*, double*, integer*);
 typedef shortint (*J_fp)(...);
 typedef integer (*I_fp)(...);
 typedef f2c_real (*R_fp)(...);
@@ -194,7 +194,7 @@ typedef /* Character */ VOID (*H_fp)(...);
 typedef /* Subroutine */ int (*S_fp)(...);
 #else
 typedef int /* Unknown procedure type */ (*U_fp)();
-typedef void (*c_NLMFCN)(int*, double*, double*, int*);
+typedef void (*c_NLMFCN)(integer*, double*, double*, integer*);
 typedef shortint (*J_fp)();
 typedef integer (*I_fp)();
 typedef f2c_real (*R_fp)();
@@ -206,7 +206,7 @@ typedef shortlogical (*K_fp)();
 typedef /* Character */ VOID (*H_fp)();
 typedef /* Subroutine */ int (*S_fp)();
 #endif
-typedef void (*c_NLMJAC)(int*, int*, double*, double*, int*);
+typedef void (*c_NLMJAC)(integer*, integer*, double*, double*, integer*);
 /* E_fp is for f2c_real functions when -R is not specified */
 typedef VOID C_f;	/* complex function */
 typedef VOID H_f;	/* character function */

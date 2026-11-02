@@ -40,7 +40,7 @@ DLLEXPORT int STDCALL NLEQ1
 (
     integer *n, 		
     c_NLMFCN fcn,
-    U_fp jac, 			
+    c_NLMJAC jac, 			
     doublereal *x,
     doublereal *xscal, 
     doublereal *rtol,
