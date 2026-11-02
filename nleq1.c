@@ -90,7 +90,7 @@ DLLEXPORT int STDCALL NLEQ1(integer *n, c_NLMFCN fcn, U_fp jac, doublereal *x,
 	static doublereal fc;
 	static integer l11, l12, l13, l41, l51, l61, l62, l63, l71, l14, l20, ml,
 		mu, l121, niw, nrw;
-	extern /* Subroutine */ int n1int_(integer *, U_fp, U_fp, doublereal *,
+	extern /* Subroutine */ int n1int_(integer *, c_NLMFCN, c_NLMJAC, doublereal *,
 		doublereal *, doublereal *, integer *, integer *, integer *,
 		integer *, integer *, doublereal *, integer *, integer *, integer
 		*, integer *, integer *, integer *, integer *, doublereal *,
@@ -1211,7 +1211,7 @@ DLLEXPORT int STDCALL NLEQ1(integer *n, c_NLMFCN fcn, U_fp jac, doublereal *x,
 		if (nbroy == 0) {
 			nbroy = 1;
 		}
-		n1int_(n, (U_fp)fcn, (U_fp)jac, &x[1], &xscal[1], rtol, &nitmax, &
+		n1int_(n, fcn, (c_NLMJAC)jac, &x[1], &xscal[1], rtol, &nitmax, &
 			nonlin, &iopt[1], ierr, lrwk, &rwk[1], &nrfrin, liwk, &iwk[1],
 			&nifrin, &m1, &m2, &nbroy, &rwk[l4], &rwk[l41], &rwk[l5], &
 			rwk[l51], &rwk[l6], &rwk[l63], &rwk[l61], &rwk[l7], &rwk[l71],
@@ -1520,7 +1520,7 @@ DLLEXPORT int STDCALL NLEQ1(integer *n, c_NLMFCN fcn, U_fp jac, doublereal *x,
 } /* n1pchk_ */
 
 
-/* Subroutine */ int n1int_(integer *n, S_fp fcn, S_fp jac, doublereal *x, 
+/* Subroutine */ int n1int_(integer *n, c_NLMFCN fcn, c_NLMJAC jac, doublereal *x, 
 	doublereal *xscal, doublereal *rtol, integer *nitmax, integer *nonlin,
 	integer *iopt, integer *ierr, integer *lrwk, doublereal *rwk, 
 	integer *nrwkfr, integer *liwk, integer *iwk, integer *niwkfr, 
@@ -1629,9 +1629,9 @@ DLLEXPORT int STDCALL NLEQ1(integer *n, c_NLMFCN fcn, U_fp jac, doublereal *x,
 	static logical qrep;
 	static integer lrwl;
 	static doublereal alfa1, alfa2;
-	extern /* Subroutine */ int n1jac_(S_fp, integer *, integer *, doublereal
+	extern /* Subroutine */ int n1jac_(c_NLMFCN, integer *, integer *, doublereal
 		*, doublereal *, doublereal *, doublereal *, doublereal *, 
-		doublereal *, integer *, doublereal *, integer *), n1jcf_(S_fp, 
+		doublereal *, integer *, doublereal *, integer *), n1jcf_(c_NLMFCN, 
 		integer *, integer *, doublereal *, doublereal *, doublereal *, 
 		doublereal *, doublereal *, doublereal *, doublereal *, 
 		doublereal *, doublereal *, integer *, doublereal *, integer *);
@@ -1651,14 +1651,14 @@ DLLEXPORT int STDCALL NLEQ1(integer *n, c_NLMFCN fcn, U_fp jac, doublereal *x,
 		doublereal *, integer *, integer *, integer *, logical *, char *, 
 		ftnlen);
 	static doublereal dxnrm;
-	extern /* Subroutine */ int n1jacb_(S_fp, integer *, integer *, integer *,
+	extern /* Subroutine */ int n1jacb_(c_NLMFCN, integer *, integer *, integer *,
 		doublereal *, doublereal *, doublereal *, doublereal *, 
 		doublereal *, doublereal *, integer *, doublereal *, doublereal *,
 		doublereal *, integer *);
 	static doublereal sumxa;
 	static logical qnext;
 	extern doublereal wnorm_(integer *, doublereal *, doublereal *);
-	extern /* Subroutine */ int n1jcfb_(S_fp, integer *, integer *, integer *,
+	extern /* Subroutine */ int n1jcfb_(c_NLMFCN, integer *, integer *, integer *,
 		doublereal *, doublereal *, doublereal *, doublereal *, 
 		doublereal *, doublereal *, doublereal *, doublereal *,
 		doublereal *, integer *, doublereal *, doublereal *, doublereal *,
@@ -2211,12 +2211,12 @@ L2:
 					monon_(&c__2);
 				}
 				if (jacgen == 3) {
-					n1jcf_((S_fp)fcn, n, n, &x[1], &f[1], &a[a_offset], &xw[1]
+					n1jcf_(fcn, n, n, &x[1], &f[1], &a[a_offset], &xw[1]
 					, &eta[1], &etamin, &etamax, &etadif, conv, nfcnj,
 						&t1[1], &ifail);
 				}
 				if (jacgen == 2) {
-					n1jac_((S_fp)fcn, n, n, &x[1], &f[1], &a[a_offset], &xw[1]
+					n1jac_(fcn, n, n, &x[1], &f[1], &a[a_offset], &xw[1]
 					, &ajdel, &ajmin, nfcnj, &t1[1], &ifail);
 				}
 				if (mprtim != 0) {
@@ -2227,12 +2227,12 @@ L2:
 					monon_(&c__2);
 				}
 				if (jacgen == 3) {
-					n1jcfb_((S_fp)fcn, n, m1, &ml, &x[1], &f[1], &a[a_offset],
+					n1jcfb_(fcn, n, m1, &ml, &x[1], &f[1], &a[a_offset],
 						&xw[1], &eta[1], &etamin, &etamax, &etadif, conv,
 						nfcnj, &t1[1], &t2[1], &t3[1], &ifail);
 				}
 				if (jacgen == 2) {
-					n1jacb_((S_fp)fcn, n, m1, &ml, &x[1], &f[1], &a[a_offset],
+					n1jacb_(fcn, n, m1, &ml, &x[1], &f[1], &a[a_offset],
 						&xw[1], &ajdel, &ajmin, nfcnj, &t1[1], &t2[1], &
 						t3[1], &ifail);
 				}
@@ -3858,7 +3858,7 @@ L4299:
 } /* n1lvls_ */
 
 
-/* Subroutine */ int n1jac_(S_fp fcn, integer *n, integer *lda, doublereal *x,
+/* Subroutine */ int n1jac_(c_NLMFCN fcn, integer *n, integer *lda, doublereal *x,
 	doublereal *fx, doublereal *a, doublereal *yscal, doublereal *ajdel, 
 	doublereal *ajmin, integer *nfcn, doublereal *fu, integer *ifail)
 {
@@ -3990,7 +3990,7 @@ L99:
 
 } /* n1jac_ */
 
-/* Subroutine */ int n1jacb_(S_fp fcn, integer *n, integer *lda, integer *ml, 
+/* Subroutine */ int n1jacb_(c_NLMFCN fcn, integer *n, integer *lda, integer *ml, 
 	doublereal *x, doublereal *fx, doublereal *a, doublereal *yscal, 
 	doublereal *ajdel, doublereal *ajmin, integer *nfcn, doublereal *fu, 
 	doublereal *u, doublereal *w, integer *ifail)
@@ -4162,7 +4162,7 @@ L99:
 
 } /* n1jacb_ */
 
-/* Subroutine */ int n1jcf_(S_fp fcn, integer *n, integer *lda, doublereal *x,
+/* Subroutine */ int n1jcf_(c_NLMFCN fcn, integer *n, integer *lda, doublereal *x,
 	doublereal *fx, doublereal *a, doublereal *yscal, doublereal *eta, 
 	doublereal *etamin, doublereal *etamax, doublereal *etadif, 
 	doublereal *conv, integer *nfcn, doublereal *fu, integer *ifail)
@@ -4335,7 +4335,7 @@ L99:
 
 } /* n1jcf_ */
 
-/* Subroutine */ int n1jcfb_(S_fp fcn, integer *n, integer *lda, integer *ml, 
+/* Subroutine */ int n1jcfb_(c_NLMFCN fcn, integer *n, integer *lda, integer *ml, 
 	doublereal *x, doublereal *fx, doublereal *a, doublereal *yscal, 
 	doublereal *eta, doublereal *etamin, doublereal *etamax, doublereal *
 	etadif, doublereal *conv, integer *nfcn, doublereal *fu, doublereal *

@@ -206,6 +206,7 @@ typedef shortlogical (*K_fp)();
 typedef /* Character */ VOID (*H_fp)();
 typedef /* Subroutine */ int (*S_fp)();
 #endif
+typedef void (*c_NLMJAC)(int*, int*, double*, double*, int*);
 /* E_fp is for f2c_real functions when -R is not specified */
 typedef VOID C_f;	/* complex function */
 typedef VOID H_f;	/* character function */
